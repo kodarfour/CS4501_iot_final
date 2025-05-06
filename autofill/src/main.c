@@ -16,7 +16,10 @@
  #define NFC_FIELD_LED     DK_LED1
  
  /* The form URL to open when scanned */
- static const uint8_t uri[] = "https://forms.gle/abc123";
+//  static const uint8_t uri[] = "https://forms.gle/abc123";
+
+ static const uint8_t uri[] = "forms.gle/ti5AqpGLSvRMHVDA9";
+
  
  static uint8_t ndef_msg_buf[NDEF_MSG_BUF_SIZE];
  
@@ -58,39 +61,39 @@
  {
 	 uint32_t len = sizeof(ndef_msg_buf);
  
-	 printk("🚀 Starting NFC URI Tag example\n");
+	 printk("Starting NFC URI Tag ... \n");
  
 	 /* Initialize LEDs */
 	 if (dk_leds_init() < 0) {
-		 printk("❌ Failed to init LEDs\n");
+		 printk("Failed to init LEDs\n");
 		 goto fail;
 	 }
  
 	 /* Initialize NFC Type 2 Tag library */
 	 if (nfc_t2t_setup(nfc_callback, NULL) < 0) {
-		 printk("❌ Failed to setup NFC T2T library\n");
+		 printk("Failed to setup NFC T2T library\n");
 		 goto fail;
 	 }
  
 	 /* Encode our URI into an NDEF message */
 	 if (welcome_msg_encode(ndef_msg_buf, &len) < 0) {
-		 printk("❌ Failed to encode URI message\n");
+		 printk("Failed to encode URI message\n");
 		 goto fail;
 	 }
  
 	 /* Set that NDEF message as the tag’s payload */
 	 if (nfc_t2t_payload_set(ndef_msg_buf, len) < 0) {
-		 printk("❌ Failed to set NFC payload\n");
+		 printk("Failed to set NFC payload\n");
 		 goto fail;
 	 }
  
 	 /* Start emulating the tag — now phones can scan it! */
 	 if (nfc_t2t_emulation_start() < 0) {
-		 printk("❌ Failed to start NFC emulation\n");
+		 printk("Failed to start NFC emulation\n");
 		 goto fail;
 	 }
  
-	 printk("✅ NFC tag ready — scan with your phone!\n");
+	 printk("NFC Tag ready — scan with your phone!\n");
  
 	 while (1) {
 		 k_sleep(K_FOREVER);
